@@ -14,8 +14,7 @@ import grin
 
 
 def main() -> None:
-    pass
-
+    grin.get_input()
 
 if __name__ == '__main__':
     main()
