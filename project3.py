@@ -14,7 +14,11 @@ import grin
 
 
 def main() -> None:
-    grin.get_input()
-
+    # test = ['LET A 1']
+    # test = grin.parse(test)
+    # for test in test:
+    #     print(test)
+    test = grin.get_input()
+    print(test)
 if __name__ == '__main__':
     main()
