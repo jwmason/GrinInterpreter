@@ -1,7 +1,7 @@
 """This module executes the grin tokens with its equivalent Python statements"""
 
 from grin.arithmeticcommands import add, subtract, multiply, divide
-from grin.parsing import GrinParseError
+from grin.inputcommands import innum, instr
 
 def run(grin_token_list):
     """This function takes the token list and executes all commands"""
@@ -9,10 +9,24 @@ def run(grin_token_list):
     grin_token_list = grin_token_list
     for line in grin_token_list:
         token = line[0][0]
+
+        # Variable Setting
+
         if token.text() == 'LET':
             variable = line[0][1].text()
             value = line[0][2].value()
             variable_dict[variable] = value
+
+        elif token.text() in ['INNUM', 'INSTR']:
+            variable_name = line[0][1].text()
+            if token.text() == 'INNUM':
+                value = innum()
+            if token.text() == 'INSTR':
+                value = instr()
+            variable_dict[variable_name] = value
+
+        # Arithmetic Operations
+
         elif token.text() in ['ADD', 'SUB', 'MULT', 'DIV']:
             var = line[0][1].text()
             num = line[0][2].value()

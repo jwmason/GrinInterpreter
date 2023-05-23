@@ -1,8 +1,6 @@
 """This module is in charge of testing arithmeticcommands.py"""
 
 import unittest
-import grin
-from grin.inputconversion import generator_to_token
 from grin.arithmeticcommands import add, subtract, multiply, divide
 
 
