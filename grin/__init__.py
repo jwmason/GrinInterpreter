@@ -20,4 +20,5 @@ from grin.parsing import *
 from grin.token import *
 from grin.inputconversion import *
 from grin.arithmeticcommands import *
+from grin.inputcommands import *
 from grin.execute import *

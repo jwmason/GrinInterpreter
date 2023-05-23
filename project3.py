@@ -16,6 +16,5 @@ import grin
 def main() -> None:
     grin_token_list = grin.get_input()
     result = grin.run(grin_token_list)
-    print(result)
 if __name__ == '__main__':
     main()

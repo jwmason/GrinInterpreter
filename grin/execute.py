@@ -1,7 +1,8 @@
 """This module executes the grin tokens with its equivalent Python statements"""
 
-from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.inputcommands import innum, instr
+from grin.arithmeticcommands import add, subtract, multiply, divide
+
 
 def run(grin_token_list):
     """This function takes the token list and executes all commands"""
@@ -25,11 +26,26 @@ def run(grin_token_list):
                 value = instr()
             variable_dict[variable_name] = value
 
+        # Basic Commands
+
+        elif token.text() == 'END':
+            exit()
+
+        elif token.text() == 'PRINT':
+            var = line[0][1].text()
+            if var.startswith('"') and var.endswith('"'):
+                print(var[1:-1])
+            elif var in variable_dict:
+                print(variable_dict[var])
+
         # Arithmetic Operations
 
         elif token.text() in ['ADD', 'SUB', 'MULT', 'DIV']:
             var = line[0][1].text()
             num = line[0][2].value()
+            # If the num is a variable
+            if num in variable_dict:
+                num = variable_dict[num]
             if var in variable_dict:
                 var_value = variable_dict[var]
                 if token.text() == 'ADD':
