@@ -5,7 +5,7 @@ import grin
 from grin.inputconversion import generator_to_token
 
 
-class GrinTestCase(unittest.TestCase):
+class TestInputConversion(unittest.TestCase):
     """This class tests functions in inputconversion.py"""
     def test_generator_to_token(self):
         cmd = ['LET A 1']

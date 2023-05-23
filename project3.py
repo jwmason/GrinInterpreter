@@ -14,11 +14,8 @@ import grin
 
 
 def main() -> None:
-    # test = ['LET A 1']
-    # test = grin.parse(test)
-    # for test in test:
-    #     print(test)
-    test = grin.get_input()
-    print(test)
+    grin_token_list = grin.get_input()
+    result = grin.run(grin_token_list)
+    print(result)
 if __name__ == '__main__':
     main()
