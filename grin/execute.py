@@ -12,6 +12,8 @@ def run(grin_token_list):
     grin_token_list = grin_token_list
     try:
         for line in grin_token_list:
+            # Setting current line
+            current_line = 1
             token = line[0][0]
 
             # Variable Setting
@@ -116,6 +118,9 @@ def run(grin_token_list):
     except RuntimeError as e:
         print(e)
         exit()
+
+    # Next line
+    current_line += 1
 
 
 __all__ = [
