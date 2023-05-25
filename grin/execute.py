@@ -76,22 +76,43 @@ def run(grin_token_list):
             # Control Flow and Subroutines
 
             elif token.text() in ['GOTO', 'GOSUB']:
+                # Holds the result of the IF statement
+                result = False
                 # If it includes an IF command
-                if len(line) == 6 and line[0][2].text() == 'IF':
-                    var1 = line[0][3]
-                    var2 = line[0][5]
-                    relational_op = line[0][4]
-                    if relational_op.text() == '>' or relational_op.text() == '>=':
+                var1 = line[0][3]
+                var2 = line[0][5]
+                # Accounting for variables and values
+                if var1 in variable_dict:
+                    var1 = variable_dict[var1]
+                else:
+                    var1 =  var1.value()
+                if var2 in variable_dict:
+                    var2 = variable_dict[var2]
+                else:
+                    var2 = var2.value()
+                relational_op = line[0][4].value()
+                try:
+                    if relational_op == "<":
+                        result = var1 < var2
+                    elif relational_op == ">":
+                        result = var1 > var2
+                    elif relational_op == "<=":
+                        result = var1 <= var2
+                    elif relational_op == ">=":
+                        result = var1 >= var2
+                    elif relational_op == "==":
+                        result = var1 == var2
+                    elif relational_op == "!=":
+                        result = var1 != var2
+                except RuntimeError as e:
+                    print(e)
+                    exit()
+                if result is True:
+                    if token.text() == 'GOTO':
                         pass
-                    elif relational_op.text() == '<' or relational_op.text() == '<=':
+                    elif token.text() == 'GOSUB':
                         pass
-                    elif relational_op.text() == '=':
-                        pass
-                    elif relational_op.text() == '<>':
-                        pass
-                    else:
-                        print('TypeError: Relational Operator not a valid parameter')
-                        exit()
+
     except RuntimeError as e:
         print(e)
         exit()
