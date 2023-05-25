@@ -11,8 +11,9 @@ def innum():
             return int(num)
         else:
             return num
-    except ValueError:
-        raise ValueError('Input is not an integer or a float')
+    except ValueError as e:
+        print(e)
+        exit()
 
 
 # Cannot test this function because it requires input, so it will not be included in test cases

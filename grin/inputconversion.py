@@ -18,12 +18,16 @@ def get_input() -> list:
 
 def generator_to_token(cmd) -> list:
     """This function turns a generator into a list of tokens"""
-    grin_token_list = []
-    # parse the command
-    grin_generator_list = grin.parse(cmd)
-    for token in grin_generator_list:
-        grin_token_list.append(token)
-    return grin_token_list
+    try:
+        grin_token_list = []
+        # parse the command
+        grin_generator_list = grin.parse(cmd)
+        for token in grin_generator_list:
+            grin_token_list.append(token)
+        return grin_token_list
+    except grin.GrinParseError as e:
+        print(e)
+        exit()
 
 
 __all__ = [
