@@ -2,6 +2,7 @@
 
 from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
+from grin.relationaloperationcommands import relational_operation
 
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
@@ -13,11 +14,10 @@ def run(grin_token_list):
     try:
         for line in grin_token_list:
             # Setting current line
-            current_line = 1
+            current_line = 0
             token = line[0][0]
 
             # Variable Setting
-
             if token.text() == 'LET':
                 variable = line[0][1].text()
                 value = line[0][2].value()
@@ -38,7 +38,6 @@ def run(grin_token_list):
                 variable_dict[variable_name] = value
 
             # Basic Commands
-
             elif token.text() == 'END':
                 exit()
 
@@ -53,15 +52,15 @@ def run(grin_token_list):
                     exit()
 
             # Arithmetic Operations
-
             elif token.text() in ['ADD', 'SUB', 'MULT', 'DIV']:
                 var = line[0][1].text()
                 num = line[0][2].value()
-                # If the num is a variable
+                # If the var or num is a variable
                 if num in variable_dict:
                     num = variable_dict[num]
                 if var in variable_dict:
                     var_value = variable_dict[var]
+                    # Checking operation
                     if token.text() == 'ADD':
                         new_value = add(var_value, num)
                         variable_dict[var] = new_value
@@ -76,7 +75,6 @@ def run(grin_token_list):
                         variable_dict[var] = new_value
 
             # Control Flow and Subroutines
-
             elif token.text() in ['GOTO', 'GOSUB']:
                 # Holds the result of the IF statement
                 result = False
@@ -93,22 +91,9 @@ def run(grin_token_list):
                 else:
                     var2 = var2.value()
                 relational_op = line[0][4].value()
-                try:
-                    if relational_op == "<":
-                        result = var1 < var2
-                    elif relational_op == ">":
-                        result = var1 > var2
-                    elif relational_op == "<=":
-                        result = var1 <= var2
-                    elif relational_op == ">=":
-                        result = var1 >= var2
-                    elif relational_op == "==":
-                        result = var1 == var2
-                    elif relational_op == "!=":
-                        result = var1 != var2
-                except RuntimeError as e:
-                    print(e)
-                    exit()
+                # Checks if the relational operation is True or False
+                result = relational_operation(var1, var2, relational_op)
+
                 if result is True:
                     if token.text() == 'GOTO':
                         pass
