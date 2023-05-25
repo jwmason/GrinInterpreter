@@ -4,11 +4,15 @@
 # Cannot test this function because it requires input, so it will not be included in test cases
 def innum():
     """This function is used to read an integer or float"""
-    num = float(input())
-    if isinstance(type(num), float) and num.is_integer():
-        return int(num)
-    else:
-        return float(num)
+    num = input().strip()
+    try:
+        num = float(num)
+        if num.is_integer():
+            return int(num)
+        else:
+            return num
+    except ValueError:
+        raise ValueError('Input is not an integer or a float')
 
 
 # Cannot test this function because it requires input, so it will not be included in test cases

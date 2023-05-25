@@ -4,6 +4,8 @@ from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
 
 
+# Function cannot be tested as it tests the functionality of grin tokens that are unique every time
+# the program is run, however each sub part inside the run function is tested.
 def run(grin_token_list):
     """This function takes the token list and executes all commands"""
     variable_dict = {}
@@ -37,6 +39,8 @@ def run(grin_token_list):
                 print(var[1:-1])
             elif var in variable_dict:
                 print(variable_dict[var])
+            else:
+                raise TypeError('Not a valid parameter')
 
         # Arithmetic Operations
 
