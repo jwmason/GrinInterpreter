@@ -3,6 +3,7 @@
 from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.relationaloperationcommands import relational_operation
+from grin.labelexecute import label_execute
 
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
@@ -18,12 +19,11 @@ def run(grin_token_list, start = None, stop = None):
             current_line = 0
             token = line[0][0]
 
-            # Labels
+            # Labels - LET, GOTO, GOSUB
             possible_colon = line[0][1].text()
             if possible_colon == ':':
                 label_name = token.text()
                 label_dict[label_name] = line[0][2:]
-                print(label_dict)
 
             # Variable Setting
             elif token.text() == 'LET':
@@ -31,6 +31,19 @@ def run(grin_token_list, start = None, stop = None):
                 value = line[0][2].value()
                 if isinstance(value, str) and value.startswith('"') and value.endswith('"'):
                     variable_dict[variable] = value
+                elif isinstance(value, str):
+                    # Check if the value is a label
+                    if value in label_dict:
+                        variable_dict[variable] = label_dict[value]
+                        new_variable = label_execute(variable_dict[variable])
+                        for key, value in new_variable.items():
+                            if key in variable_dict:
+                                variable_dict[key] = value
+                            else:
+                                variable_dict[key] = value
+                    else:
+                        print('TypeError: Not a valid parameter')
+                        exit()
                 elif isinstance(value, (int, float)):
                     variable_dict[variable] = value
                 else:
