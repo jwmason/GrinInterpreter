@@ -3,15 +3,17 @@
 from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.labels import label_check
-from grin.gotogosubcommands import target_conditional, goto, gosub
 from grin.letcommand import let
 
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
-def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None):
+def run2(grin_token_list, start = None, stop = None):
     """This function takes the token list and executes all commands"""
     # Setting variables
+    variable_dict = {}
+    label_dict = {}
+    line_dict = {}
     list_len = len(grin_token_list)
     grin_token_list = grin_token_list[start:stop]
 
@@ -19,7 +21,6 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
     for line in grin_token_list:
         # Setting current line and Identifier Token
         current_line = 0
-        current_line += 1
         token = line[0][0]
 
         # Labels - LET, GOTO, GOSUB
@@ -77,19 +78,23 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
                     variable_dict[var] = new_value
 
         # Control Flow and Subroutines
-        elif token.text() in ['GOTO', 'GOSUB']:
-            target_line = None
-            target_line = target_conditional(line, variable_dict, line_dict, list_len, current_line)
-            if target_line is not None:
-                if token.text() == 'GOTO':
-                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line)
-                    break
-                elif token.text() == 'GOSUB':
-                    goto(grin_token_list, target_line)
-                    break
-            else:
-                raise Exception('Target does not meet requirements')
+        # elif token.text() in ['GOTO', 'GOSUB']:
+        #     target_line = None
+        #     target_line = target_conditional(line, variable_dict, line_dict, list_len, current_line)
+        #     if target_line is not None:
+        #         if token.text() == 'GOTO':
+        #             goto(grin_token_list, target_line)
+        #             break
+        #         elif token.text() == 'GOSUB':
+        #             goto(grin_token_list, target_line, )
+        #             break
+        #     else:
+        #         raise Exception('Target does not meet requirements')
+
+        # Next line
+        current_line += 1
+
 
 __all__ = [
-    run.__name__
+    run2.__name__
 ]
