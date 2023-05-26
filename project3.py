@@ -14,9 +14,12 @@ import grin
 
 
 def main() -> None:
-    grin_token_list = grin.get_input()
-    grin.run(grin_token_list)
-
+    try:
+        grin_token_list = grin.get_input()
+        grin.run(grin_token_list)
+    except Exception as e:
+        print(e)
+        exit()
 
 if __name__ == '__main__':
     main()

@@ -3,10 +3,8 @@
 import grin
 
 
-def label_execute(grin_token_list) -> dict:
+def label_execute(grin_token_list, variable_dict, label_dict) -> dict:
     """This function takes the label command and executes it"""
-    variable_dict = {}
-    label_dict = {}
     line = grin_token_list
     try:
         token = line[0]

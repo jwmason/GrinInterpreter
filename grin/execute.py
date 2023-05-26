@@ -35,7 +35,7 @@ def run(grin_token_list, start = None, stop = None):
                     # Check if the value is a label
                     if value in label_dict:
                         variable_dict[variable] = label_dict[value]
-                        new_variable = label_execute(variable_dict[variable])
+                        new_variable = label_execute(variable_dict[variable], variable_dict, label_dict)
                         for key, value in new_variable.items():
                             if key in variable_dict:
                                 variable_dict[key] = value
@@ -77,23 +77,27 @@ def run(grin_token_list, start = None, stop = None):
                 var = line[0][1].text()
                 num = line[0][2].value()
                 # If the var or num is a variable
-                if num in variable_dict:
-                    num = variable_dict[num]
-                if var in variable_dict:
-                    var_value = variable_dict[var]
-                    # Checking operation
-                    if token.text() == 'ADD':
-                        new_value = add(var_value, num)
-                        variable_dict[var] = new_value
-                    elif token.text() == 'SUB':
-                        new_value = subtract(var_value, num)
-                        variable_dict[var] = new_value
-                    elif token.text() == 'MULT':
-                        new_value = multiply(var_value, num)
-                        variable_dict[var] = new_value
-                    elif token.text() == 'DIV':
-                        new_value = divide(var_value, num)
-                        variable_dict[var] = new_value
+                try:
+                    if num in variable_dict:
+                        num = variable_dict[num]
+                    if var in variable_dict:
+                        var_value = variable_dict[var]
+                        # Checking operation
+                        if token.text() == 'ADD':
+                            new_value = add(var_value, num)
+                            variable_dict[var] = new_value
+                        elif token.text() == 'SUB':
+                            new_value = subtract(var_value, num)
+                            variable_dict[var] = new_value
+                        elif token.text() == 'MULT':
+                            new_value = multiply(var_value, num)
+                            variable_dict[var] = new_value
+                        elif token.text() == 'DIV':
+                            new_value = divide(var_value, num)
+                            variable_dict[var] = new_value
+                except (TypeError, RuntimeError, ZeroDivisionError) as e:
+                    print(e)
+                    exit()
 
             # Control Flow and Subroutines
             elif token.text() in ['GOTO', 'GOSUB']:
