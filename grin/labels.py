@@ -12,6 +12,8 @@ def label_check(token, line, label_dict) -> dict:
     return label_dict
 
 
+# Function cannot be tested as it tests the functionality of grin tokens that are unique every time
+# the program is run, however each sub part inside the run function is tested.
 def label_execute(grin_token_list, variable_dict, label_dict) -> dict:
     """This function takes the label command and executes it"""
     line = grin_token_list
@@ -116,5 +118,6 @@ def label_execute(grin_token_list, variable_dict, label_dict) -> dict:
 
 
 __all__ = [
+    label_check.__name__,
     label_execute.__name__
 ]

@@ -5,52 +5,35 @@ from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.relationaloperationcommands import relational_operation
 from grin.labels import label_check, label_execute
 from grin.gotogosubcommands import find_target_line
+from grin.letcommand import let
 
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
 def run(grin_token_list, start = None, stop = None):
     """This function takes the token list and executes all commands"""
+    # Setting variables
     variable_dict = {}
     label_dict = {}
     line_dict = {}
     list_len = len(grin_token_list)
     grin_token_list = grin_token_list[start:stop]
+
+    # Running through each Grin line
     for line in grin_token_list:
-        # Setting current line
+        # Setting current line and Identifier Token
         current_line = 0
-        # Setting Identifier Token
         token = line[0][0]
 
         # Labels - LET, GOTO, GOSUB
         new_label_dict = label_check(token, line, label_dict)
-        for key, value in new_label_dict.items():
-            if not key in label_dict:
-                label_dict[key] = value
+        label_dict.update(new_label_dict)
 
         # Variable Setting
         if token.text() == 'LET':
-            variable = line[0][1].text()
-            value = line[0][2].value()
-            if isinstance(value, str) and value.startswith('"') and value.endswith('"'):
-                variable_dict[variable] = value
-            elif isinstance(value, str):
-                # Check if the value is a label
-                if value in label_dict:
-                    variable_dict[variable] = label_dict[value]
-                    label_dict[variable] = current_line
-                    new_variable = label_execute(variable_dict[variable], variable_dict, label_dict)
-                    for key, value in new_variable.items():
-                        if key in variable_dict:
-                            variable_dict[key] = value
-                        else:
-                            variable_dict[key] = value
-                else:
-                    raise Exception('TypeError: Not a valid parameter')
-            elif isinstance(value, (int, float)):
-                variable_dict[variable] = value
-            else:
-                raise Exception('TypeError: Not a valid parameter')
+            new_variable_dict, new_label_dict = let(line, variable_dict, label_dict, current_line)
+            variable_dict.update(new_variable_dict)
+            label_dict.update(new_label_dict)
 
         elif token.text() in ['INNUM', 'INSTR']:
             variable_name = line[0][1].text()
