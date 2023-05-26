@@ -7,18 +7,26 @@ from grin.relationaloperationcommands import relational_operation
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
-def run(grin_token_list):
+def run(grin_token_list, start = None, stop = None):
     """This function takes the token list and executes all commands"""
     variable_dict = {}
-    grin_token_list = grin_token_list
+    label_dict = {}
+    grin_token_list = grin_token_list[start:stop]
     try:
         for line in grin_token_list:
             # Setting current line
             current_line = 0
             token = line[0][0]
 
+            # Labels
+            possible_colon = line[0][1].text()
+            if possible_colon == ':':
+                label_name = token.text()
+                label_dict[label_name] = line[0][2:]
+                print(label_dict)
+
             # Variable Setting
-            if token.text() == 'LET':
+            elif token.text() == 'LET':
                 variable = line[0][1].text()
                 value = line[0][2].value()
                 if isinstance(value, str) and value.startswith('"') and value.endswith('"'):

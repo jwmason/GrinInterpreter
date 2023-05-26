@@ -25,7 +25,7 @@ def generator_to_token(cmd) -> list:
         for token in grin_generator_list:
             grin_token_list.append(token)
         return grin_token_list
-    except grin.GrinParseError as e:
+    except (grin.GrinParseError, grin.GrinLexError) as e:
         print(e)
         exit()
 
