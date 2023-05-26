@@ -3,13 +3,13 @@
 from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.labels import label_check
-from grin.gotogosubcommands import target_conditional, goto, gosub
+from grin.gotogosubcommands import target_conditional
 from grin.letcommand import let
 
 
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
-def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None):
+def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None, recall_line=None):
     """This function takes the token list and executes all commands"""
     # Setting variables
     list_len = len(grin_token_list)
@@ -85,7 +85,7 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
                     run(grin_token_list, variable_dict, label_dict, line_dict, target_line)
                     break
                 elif token.text() == 'GOSUB':
-                    goto(grin_token_list, target_line)
+                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line, end_line, recall_line)
                     break
             else:
                 raise Exception('Target does not meet requirements')
