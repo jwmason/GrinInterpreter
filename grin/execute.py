@@ -3,7 +3,7 @@
 from grin.inputcommands import innum, instr
 from grin.arithmeticcommands import add, subtract, multiply, divide
 from grin.relationaloperationcommands import relational_operation
-from grin.labelexecute import label_execute
+from grin.labels import label_check, label_execute
 from grin.gotogosubcommands import find_target_line
 
 
@@ -19,16 +19,17 @@ def run(grin_token_list, start = None, stop = None):
     for line in grin_token_list:
         # Setting current line
         current_line = 0
+        # Setting Identifier Token
         token = line[0][0]
 
         # Labels - LET, GOTO, GOSUB
-        possible_colon = line[0][1].text()
-        if possible_colon == ':':
-            label_name = token.text()
-            label_dict[label_name] = line[0][2:]
+        new_label_dict = label_check(token, line, label_dict)
+        for key, value in new_label_dict.items():
+            if not key in label_dict:
+                label_dict[key] = value
 
         # Variable Setting
-        elif token.text() == 'LET':
+        if token.text() == 'LET':
             variable = line[0][1].text()
             value = line[0][2].value()
             if isinstance(value, str) and value.startswith('"') and value.endswith('"'):

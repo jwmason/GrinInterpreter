@@ -3,6 +3,15 @@
 import grin
 
 
+def label_check(token, line, label_dict) -> dict:
+    """This function checks if the line has a label"""
+    possible_colon = line[0][1].text()
+    if possible_colon == ':':
+        label_name = token.text()
+        label_dict[label_name] = line[0][2:]
+    return label_dict
+
+
 def label_execute(grin_token_list, variable_dict, label_dict) -> dict:
     """This function takes the label command and executes it"""
     line = grin_token_list

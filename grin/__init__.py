@@ -23,5 +23,5 @@ from grin.arithmeticcommands import *
 from grin.inputcommands import *
 from grin.relationaloperationcommands import *
 from grin.execute import *
-from grin.labelexecute import *
+from grin.labels import *
 from grin.gotogosubcommands import *
