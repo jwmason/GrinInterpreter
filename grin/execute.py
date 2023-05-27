@@ -7,12 +7,30 @@ from grin.gotogosubcommands import target_conditional
 from grin.letcommand import let
 
 
+def set_labels(grin_token_list, label_dict = {}):
+    for line in grin_token_list:
+        # Setting Identifier Token
+        current_line = 0
+        current_line += 1
+        token = line[0][0]
+
+        # Labels - LET, GOTO, GOSUB
+        new_label_dict = label_check(token, line, label_dict)
+        label_dict.update(new_label_dict)
+
+        # Variable Setting
+        if token.text() == 'LET':
+            new_variable_dict, new_label_dict = let(line, {}, label_dict, current_line)
+            label_dict.update(new_label_dict)
+    return label_dict
+
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
 def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None, recall_line=None):
     """This function takes the token list and executes all commands"""
     # Setting variables
     list_len = len(grin_token_list)
+    label_dict = set_labels(grin_token_list)
     grin_token_list = grin_token_list[start:stop]
 
     # Running through each Grin line
