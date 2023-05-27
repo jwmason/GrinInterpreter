@@ -32,11 +32,10 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
     list_len = len(grin_token_list)
     label_dict = set_labels(grin_token_list)
     grin_token_list = grin_token_list[start:stop]
-
+    current_line = 0
     # Running through each Grin line
     for line in grin_token_list:
         # Setting current line and Identifier Token
-        current_line = 0
         current_line += 1
         token = line[0][0]
 
@@ -100,7 +99,7 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
             target_line = target_conditional(line, variable_dict, line_dict, list_len, current_line)
             if target_line is not None:
                 if token.text() == 'GOTO':
-                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line)
+                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line-1)
                     break
                 elif token.text() == 'GOSUB':
                     run(grin_token_list, variable_dict, label_dict, line_dict, target_line, end_line, recall_line)

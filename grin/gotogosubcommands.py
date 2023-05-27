@@ -11,12 +11,12 @@ def target_conditional(line, variable_dict, line_dict, list_len, current_line):
         var1 = line[0][3]
         var2 = line[0][5]
         # Accounting for variables and values
-        if var1.value() in variable_dict:
-            var1 = variable_dict[var1]
+        if var1.text() in variable_dict:
+            var1 = variable_dict[var1.text()]
         else:
             var1 = var1.value()
-        if var2.value() in variable_dict:
-            var2 = variable_dict[var2]
+        if var2.text() in variable_dict:
+            var2 = variable_dict[var2.text()]
         else:
             var2 = var2.value()
         relational_op = line[0][4].text()

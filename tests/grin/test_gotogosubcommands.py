@@ -4,7 +4,7 @@ import unittest
 import grin
 import contextlib
 import io
-from grin.gotogosubcommands import find_target_line, goto, gosub
+from grin.gotogosubcommands import find_target_line
 
 
 class TestGotoGosubCommands(unittest.TestCase):
