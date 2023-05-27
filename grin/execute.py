@@ -105,7 +105,6 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
                     break
                 elif token.text() == 'GOSUB':
                     run(grin_token_list, variable_dict, label_dict, line_dict, target_line-1)
-                    break
             else:
                 raise Exception('Target does not meet requirements')
 
