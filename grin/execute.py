@@ -24,15 +24,17 @@ def set_labels(grin_token_list, label_dict = {}):
             label_dict.update(new_label_dict)
     return label_dict
 
+
 # Function cannot be tested as it tests the functionality of grin tokens that are unique every time
 # the program is run, however each sub part inside the run function is tested.
-def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None, recall_line=None):
+def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, start=None, stop=None):
     """This function takes the token list and executes all commands"""
     # Setting variables
     list_len = len(grin_token_list)
     label_dict = set_labels(grin_token_list)
     grin_token_list = grin_token_list[start:stop]
     current_line = 0
+    # return_list = get_return(grin_token_list)
     # Running through each Grin line
     for line in grin_token_list:
         # Setting current line and Identifier Token
@@ -102,10 +104,13 @@ def run(grin_token_list, variable_dict = {}, label_dict = {}, line_dict = {}, st
                     run(grin_token_list, variable_dict, label_dict, line_dict, target_line-1)
                     break
                 elif token.text() == 'GOSUB':
-                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line, end_line, recall_line)
+                    run(grin_token_list, variable_dict, label_dict, line_dict, target_line-1)
                     break
             else:
                 raise Exception('Target does not meet requirements')
+
+        elif token.text() == 'RETURN':
+            run(grin_token_list, variable_dict, label_dict, line_dict, target_line)
 
 __all__ = [
     run.__name__
