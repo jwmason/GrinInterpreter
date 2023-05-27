@@ -2,7 +2,6 @@
 
 from grin.labels import label_execute
 
-
 def let(line, variable_dict: dict, label_dict: dict, current_line) -> dict:
     """This function creates a variable in the given variable_dict"""
     variable = line[0][1].text()

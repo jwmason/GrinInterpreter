@@ -1,7 +1,5 @@
 """This module is in charge of executing the command given to the label"""
 
-import grin
-
 
 def label_check(token, line, label_dict) -> dict:
     """This function checks if the line has a label"""
@@ -118,6 +116,5 @@ def label_execute(grin_token_list, variable_dict, label_dict) -> dict:
 
 
 __all__ = [
-    label_check.__name__,
-    label_execute.__name__
+    label_check.__name__
 ]

@@ -3,9 +3,7 @@
 import unittest
 import grin
 from grin.inputconversion import generator_to_token
-from grin.labels import label_check, label_execute
-import contextlib
-import io
+from grin.labels import label_check
 
 class TestLabels(unittest.TestCase):
     """This class tests functions in labels.py"""
